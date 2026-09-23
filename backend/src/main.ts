@@ -10,6 +10,8 @@ import calibrationPlanRoutes from "./routes/CalibrationPlanRoutes";
 import calibrationCertificateRoutes from "./routes/CalibrationCertificateRoutes";
 import calibrationVendorRoutes from "./routes/CalibrationVendorRoutes";
 import overdueAlertRoutes from "./routes/OverdueAlertRoutes";
+import measurementStandardRoutes from "./routes/MeasurementStandardRoutes";
+import intermediateCheckRoutes from "./routes/IntermediateCheckRoutes";
 
 const app = express();
 app.use(cors());
@@ -23,5 +25,7 @@ app.use("/api/calibration-plan", calibrationPlanRoutes);
 app.use("/api/calibration-certificate", calibrationCertificateRoutes);
 app.use("/api/calibration-vendor", calibrationVendorRoutes);
 app.use("/api/overdue-alert", overdueAlertRoutes);
+app.use("/api/measurement-standard", measurementStandardRoutes);
+app.use("/api/intermediate-check", intermediateCheckRoutes);
 app.use(errorHandlerMiddleware);
 app.listen(config.port, () => console.log("calibration-api backend listening on", config.port));

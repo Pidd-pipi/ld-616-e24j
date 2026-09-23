@@ -31,68 +31,85 @@ export const seed = {
       "status": "VALID"
     }
   ],
+  "measurementStandard": [
+    {
+      "id": 1,
+      "standard_code": "STD-001",
+      "name": "多功能校准源",
+      "specification": "5520A",
+      "owner_dept": "计量室",
+      "status": "AVAILABLE"
+    },
+    {
+      "id": 2,
+      "standard_code": "STD-002",
+      "name": "数字多用表标准器",
+      "specification": "8508A",
+      "owner_dept": "计量室",
+      "status": "AVAILABLE"
+    }
+  ],
   "calibrationPlan": [
     {
       "id": 1,
+      "plan_code": "PLAN-001",
       "device_id": 1,
+      "standard_code": "STD-001",
       "planned_date": "2026-06-11T09:00:00Z",
       "plan_type": "DUE_SOON",
       "priority": "priority 1",
-      "status": "DUE_SOON",
+      "status": "PLANNED",
       "assigned_vendor_id": 1,
       "created_by": "created by 1"
     },
     {
       "id": 2,
+      "plan_code": "PLAN-002",
       "device_id": 2,
+      "standard_code": "STD-001",
       "planned_date": "2026-06-12T09:00:00Z",
       "plan_type": "OVERDUE",
       "priority": "priority 2",
-      "status": "OVERDUE",
+      "status": "ASSIGNED",
       "assigned_vendor_id": 2,
       "created_by": "created by 2"
     },
     {
       "id": 3,
+      "plan_code": "PLAN-003",
       "device_id": 3,
+      "standard_code": "STD-002",
       "planned_date": "2026-06-13T09:00:00Z",
       "plan_type": "CALIBRATING",
       "priority": "priority 3",
-      "status": "VALID",
+      "status": "IN_PROGRESS",
       "assigned_vendor_id": 3,
       "created_by": "created by 3"
+    },
+    {
+      "id": 4,
+      "plan_code": "PLAN-004",
+      "device_id": 1,
+      "standard_code": "STD-001",
+      "planned_date": "2026-05-30T09:00:00Z",
+      "plan_type": "CALIBRATING",
+      "priority": "priority 4",
+      "status": "CERT_UPLOADED",
+      "assigned_vendor_id": 1,
+      "created_by": "created by 4"
     }
   ],
+  "intermediateCheck": [],
   "calibrationCertificate": [
     {
       "id": 1,
       "device_id": 1,
-      "plan_id": 1,
+      "plan_id": 4,
       "certificate_no": "certificate no 1",
-      "result_status": "DUE_SOON",
-      "valid_until": "valid until 1",
+      "result_status": "PASS",
+      "valid_until": "2027-05-30T09:00:00Z",
       "file_path": "file path 1",
       "issued_by": "issued by 1"
-    },
-    {
-      "id": 2,
-      "device_id": 2,
-      "plan_id": 2,
-      "certificate_no": "certificate no 2",
-      "result_status": "OVERDUE",
-      "valid_until": "valid until 2",
-      "file_path": "file path 2",
-      "issued_by": "issued by 2"
-    },
-    {
-      "id": 3,
-      "device_id": 3,
-      "plan_id": 3,
-      "certificate_no": "certificate no 3",
-      "result_status": "VALID",
-      "valid_until": "valid until 3",
-      "file_path": "file path 3",
-      "issued_by": "issued by 3"
     }
   ],
   "calibrationVendor": [
