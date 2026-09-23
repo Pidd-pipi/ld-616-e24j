@@ -31,36 +31,76 @@ export const seed = {
       "status": "VALID"
     }
   ],
+  "standardInstrument": [
+    {
+      "id": 1,
+      "standard_no": "STD-001",
+      "name": "一等标准电阻",
+      "specification": "0~100 Ω 0.01 级",
+      "status": "AVAILABLE"
+    },
+    {
+      "id": 2,
+      "standard_no": "STD-002",
+      "name": "标准压力表",
+      "specification": "0~60 MPa 0.05 级",
+      "status": "AVAILABLE"
+    }
+  ],
+  "intermediateCheck": [
+    {
+      "id": 1,
+      "check_no": "CHK-0001",
+      "standard_no": "STD-001",
+      "conclusion": "PASS",
+      "operated_by": "quality-manager",
+      "operated_at": "2026-08-20T09:00:00Z"
+    }
+  ],
   "calibrationPlan": [
     {
       "id": 1,
       "device_id": 1,
-      "planned_date": "2026-06-11T09:00:00Z",
-      "plan_type": "DUE_SOON",
-      "priority": "priority 1",
-      "status": "DUE_SOON",
+      "standard_id": 1,
+      "planned_date": "2026-10-11T09:00:00Z",
+      "plan_type": "PERIODIC",
+      "priority": "HIGH",
+      "status": "ASSIGNED",
       "assigned_vendor_id": 1,
       "created_by": "created by 1"
     },
     {
       "id": 2,
       "device_id": 2,
-      "planned_date": "2026-06-12T09:00:00Z",
-      "plan_type": "OVERDUE",
-      "priority": "priority 2",
-      "status": "OVERDUE",
+      "standard_id": 1,
+      "planned_date": "2026-10-12T09:00:00Z",
+      "plan_type": "PERIODIC",
+      "priority": "MEDIUM",
+      "status": "IN_PROGRESS",
       "assigned_vendor_id": 2,
       "created_by": "created by 2"
     },
     {
       "id": 3,
       "device_id": 3,
+      "standard_id": 1,
       "planned_date": "2026-06-13T09:00:00Z",
-      "plan_type": "CALIBRATING",
-      "priority": "priority 3",
-      "status": "VALID",
+      "plan_type": "PERIODIC",
+      "priority": "LOW",
+      "status": "CLOSED",
       "assigned_vendor_id": 3,
       "created_by": "created by 3"
+    },
+    {
+      "id": 4,
+      "device_id": 1,
+      "standard_id": 2,
+      "planned_date": "2026-10-18T09:00:00Z",
+      "plan_type": "FIRST",
+      "priority": "LOW",
+      "status": "PLANNED",
+      "assigned_vendor_id": 0,
+      "created_by": "created by 1"
     }
   ],
   "calibrationCertificate": [
@@ -153,4 +193,4 @@ export const seed = {
       "status": "VALID"
     }
   ]
-} as const;
+};

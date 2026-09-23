@@ -3,5 +3,7 @@ export const LOG_TEMPLATES = {
   CalibrationPlan: ["CalibrationPlan.create", "CalibrationPlan.update", "CalibrationPlan.status", "CalibrationPlan.export"],
   CalibrationCertificate: ["CalibrationCertificate.create", "CalibrationCertificate.update", "CalibrationCertificate.status", "CalibrationCertificate.export"],
   CalibrationVendor: ["CalibrationVendor.create", "CalibrationVendor.update", "CalibrationVendor.status", "CalibrationVendor.export"],
-  OverdueAlert: ["OverdueAlert.create", "OverdueAlert.update", "OverdueAlert.status", "OverdueAlert.export"]
+  OverdueAlert: ["OverdueAlert.create", "OverdueAlert.update", "OverdueAlert.status", "OverdueAlert.export"],
+  StandardInstrument: ["StandardInstrument.create", "StandardInstrument.update", "StandardInstrument.status", "StandardInstrument.export"],
+  IntermediateCheck: ["IntermediateCheck.submit", "IntermediateCheck.duplicate", "IntermediateCheck.standardDisable", "IntermediateCheck.standardRecover", "IntermediateCheck.planReturn", "IntermediateCheck.query"]
 };

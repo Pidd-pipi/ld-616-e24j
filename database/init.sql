@@ -12,12 +12,30 @@ CREATE TABLE IF NOT EXISTS measuring_device (
 CREATE TABLE IF NOT EXISTS calibration_plan (
   id INTEGER PRIMARY KEY,
   device_id TEXT,
+  standard_id TEXT,
   planned_date TEXT,
   plan_type TEXT,
   priority TEXT,
   status TEXT,
   assigned_vendor_id TEXT,
   created_by TEXT
+);
+
+CREATE TABLE IF NOT EXISTS standard_instrument (
+  id INTEGER PRIMARY KEY,
+  standard_no TEXT,
+  name TEXT,
+  specification TEXT,
+  status TEXT
+);
+
+CREATE TABLE IF NOT EXISTS intermediate_check (
+  id INTEGER PRIMARY KEY,
+  check_no TEXT,
+  standard_no TEXT,
+  conclusion TEXT,
+  operated_by TEXT,
+  operated_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS calibration_certificate (

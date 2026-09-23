@@ -34,8 +34,10 @@ cp .env.example .env && docker compose up -d
 
 ```text
 
-backend/src/routes, controllers, services, models, repositories, middlewares, constants, constructors, utils, types, config
+backend/src/routes, controllers, services, models, repositories, middlewares, constants, constructors, validators, utils, types, config
 ```
+
+新增实体沿用同一分层：StandardInstrument / IntermediateCheck 各自贯穿 model、repository、service、controller、route、constructor（DTO 工厂）、type、constants，并在 `validators/intermediateCheckValidator.ts` 做入参校验。
 
 ## 环境变量说明
 
@@ -57,6 +59,28 @@ backend/src/routes, controllers, services, models, repositories, middlewares, co
 - DeviceCalibrationStatus: constants/DeviceCalibrationStatus、types/DeviceCalibrationStatus、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - PlanStatus: constants/PlanStatus、types/PlanStatus、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - CertificateResult: constants/CertificateResult、types/CertificateResult、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
+- StandardStatus（AVAILABLE / DISABLED，计量标准器状态）：`constants/StandardStatus.ts`、`types/StandardStatus.ts`、`models/StandardInstrument.ts`、`repositories/StandardInstrumentRepository.ts`、`constructors/StandardInstrumentDtoFactory.ts`、`utils/formatters.ts`（formatStandardStatusText）、`services/IntermediateCheckService.ts`、`database/init.sql`(standard_instrument.status)、`seed.ts`。
+- CheckConclusion（PASS / FAIL，期间核查结论）：`constants/CheckConclusion.ts`、`types/CheckConclusion.ts`、`models/IntermediateCheck.ts`、`repositories/IntermediateCheckRepository.ts`、`constructors/IntermediateCheckDtoFactory.ts`、`utils/formatters.ts`（formatCheckConclusionText）、`validators/intermediateCheckValidator.ts`、`services/IntermediateCheckService.ts`、`constants/errorMessages.ts`（CHECK_CONCLUSION_INVALID）、`database/init.sql`(intermediate_check.conclusion)、`seed.ts`。
+
+## 计量标准器期间核查
+
+计量室对在用计量标准器（StandardInstrument）开展期间核查（IntermediateCheck），接口挂在 `/api` 下：
+
+| 方法与路径 | 说明 |
+|---|---|
+| `GET /api/standard-instrument` | 标准器台账 |
+| `GET /api/standard-instrument/:standardNo` | 按标准器编号查询 |
+| `POST /api/intermediate-check` | 提交一次期间核查 |
+| `GET /api/intermediate-check/standard/:standardNo` | 按标准器编号查看核查记录与关联校准计划 |
+
+提交体：`{ "standard_no", "check_no", "conclusion"(PASS/FAIL), "operated_by"?, "operated_at"? }`，记录标准器编号、核查编号、结论与操作时间（未传时间取服务端当前时间）。
+
+业务规则：
+
+1. **同一核查编号再次提交直接返回首次结论**（响应中 `duplicated: true`），不改动标准器状态和任何校准计划。
+2. 核查结论 **不合格（FAIL）**：该标准器进入停用（DISABLED）状态；依赖它且尚未完成的校准计划退回待派（status=PLANNED、清空已派机构），受影响计划编号通过 `affected_plan_ids` / `returned_plan_ids` 返回；已签发证书（CERT_UPLOADED/CLOSED）及已取消计划保持原样。
+3. **重新核查合格（PASS）**：标准器恢复可用（AVAILABLE）；退回待派的计划不会自动派发，仍由调度员决定何时派发（可在关联计划的 `pending_dispatch_plan_ids` 中查看）。
+4. 按标准器编号可查看全部核查记录（含合格/不合格中文文案）和关联计划，`protected: true` 表示受证书保护、停用不影响的计划。
 
 ## 为什么会牵一发动全身
 
